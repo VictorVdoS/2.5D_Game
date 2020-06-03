@@ -1,0 +1,47 @@
+//I'm using Unity5 and C# 
+// This is my camera, it'll be following my main character in a Side Scrolling game
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using UnityEngine;
+
+public class CameraController : MonoBehaviour
+{
+    //Camera limit, I'm using this to limit my axis
+    [SerializeField]
+    float leftLimit;
+    [SerializeField]
+    float rightLimit;
+    [SerializeField]
+    float bottomLimit;
+    [SerializeField]
+    float topLimit;
+    //camera limit
+
+    //camera following
+    public Transform target;
+    public Vector3 offset;
+    public bool useOffsetValues;
+    //end of camera following
+
+    void Start()
+    {
+    //camera following
+        if (!useOffsetValues)
+        {
+            offset = target.position - transform.position;
+        }
+        //end of camera following
+    }
+
+    void Update()
+    {
+        transform.position = target.position - offset;//camera following
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, leftLimit, rightLimit), Mathf.Clamp(transform.position.y, bottomLimit, topLimit),transform.position.z);//camera limit
+    
+    }
+
+    //this id my values on Unity
+    //-25, 15, -3, 17, X0, Y-1.75, X15 checkbox
